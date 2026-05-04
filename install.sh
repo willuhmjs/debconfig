@@ -55,7 +55,6 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
     waybar wofi mako-notifier \
     cliphist \
     polkit-kde-agent-1 \
-    xdg-desktop-portal-hyprland \
     grim slurp wl-clipboard \
     kitty dolphin \
     pipewire pipewire-pulse wireplumber pipewire-alsa pipewire-jack \
@@ -71,10 +70,10 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
     texlive-latex-base texlive-latex-extra texlive-fonts-recommended \
     wlogout
 
-# hyprland + hyprlock + hypridle from sid
+# hyprland + hyprlock + hypridle + xdg-desktop-portal-hyprland from sid
 info "Installing Hyprland from unstable..."
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -t unstable \
-    hyprland hyprlock hypridle
+    hyprland hyprlock hypridle xdg-desktop-portal-hyprland
 
 ok "Packages installed"
 
