@@ -641,6 +641,11 @@ ok "Configs written"
 # --- system config ---
 info "Configuring system..."
 
+# Create greeter user if it doesn't exist
+if ! id -u greeter &>/dev/null; then
+    sudo useradd -M -G video -s /usr/bin/nologin greeter
+fi
+
 sudo mkdir -p /etc/greetd
 cat << 'EOF' | sudo tee /etc/greetd/config.toml > /dev/null
 [terminal]
