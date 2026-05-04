@@ -643,7 +643,7 @@ info "Configuring system..."
 
 # Create greeter user if it doesn't exist
 if ! id -u greeter &>/dev/null; then
-    sudo useradd -M -G video -s /usr/bin/nologin greeter
+    sudo useradd -M -G video -s /sbin/nologin greeter
 fi
 
 sudo mkdir -p /etc/greetd
