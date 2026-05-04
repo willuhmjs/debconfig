@@ -56,7 +56,7 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
     cliphist \
     polkit-kde-agent-1 \
     grim slurp wl-clipboard \
-    kitty dolphin \
+    kitty thunar \
     pipewire pipewire-pulse wireplumber pipewire-alsa pipewire-jack \
     network-manager-gnome blueman pavucontrol \
     playerctl brightnessctl \
@@ -242,7 +242,7 @@ bindm = SUPER, mouse:273, resizewindow
 bind = SUPER, RETURN, exec, kitty
 bind = SUPER, Q, killactive,
 bind = SUPER, SPACE, exec, wofi --show drun
-bind = SUPER, E, exec, dolphin
+bind = SUPER, E, exec, thunar
 bind = SUPER, B, exec, helium
 bind = SUPER, D, exec, discord
 bind = SUPER, F, fullscreen,
@@ -323,8 +323,8 @@ windowrule {
 }
 
 windowrule {
-    name = dolphin-rules
-    match:class = ^(dolphin)$
+    name = thunar-rules
+    match:class = ^([Tt]hunar)$
     opacity = 0.90 0.90
 }
 
