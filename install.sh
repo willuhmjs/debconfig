@@ -70,10 +70,10 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
     texlive-latex-base texlive-latex-extra texlive-fonts-recommended \
     wlogout
 
-# hyprland + hyprlock + hypridle from sid
+# hyprland + hyprlock + hypridle + hyprland-guiutils from sid
 info "Installing Hyprland from unstable..."
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -t unstable \
-    hyprland hyprlock hypridle
+    hyprland hyprlock hypridle hyprland-guiutils
 
 # Try to install xdg-desktop-portal-hyprland, but don't fail if dependencies conflict
 info "Attempting to install xdg-desktop-portal-hyprland..."
@@ -652,7 +652,7 @@ cat << 'EOF' | sudo tee /etc/greetd/config.toml > /dev/null
 vt = 1
 
 [default_session]
-command = "tuigreet --time --remember --remember-user-session --asterisks --cmd 'Hyprland'"
+command = "tuigreet --time --remember --remember-user-session --asterisks --cmd 'start-hyprland'"
 user = "greeter"
 EOF
 
