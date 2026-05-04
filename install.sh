@@ -142,14 +142,15 @@ fi
 # --- install helium browser ---
 if ! command -v helium &>/dev/null; then
     info "Installing Helium browser..."
-    # Add Helium repository GPG key
-    curl -fsSL https://pkg.helium.computer/helium.gpg | sudo gpg --dearmor -o /usr/share/keyrings/helium.gpg
+    # Add Helium repository GPG key from GitHub
+    curl -fsSL https://raw.githubusercontent.com/imputnet/helium-linux/main/pubkey.asc | \
+        sudo gpg --dearmor -o /usr/share/keyrings/helium.gpg
     # Add Helium repository
     echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/helium.gpg] https://pkg.helium.computer/deb stable main" | \
         sudo tee /etc/apt/sources.list.d/helium.list > /dev/null
     # Update and install
     sudo apt-get update
-    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y helium
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y helium-bin
     ok "Helium browser installed"
 else
     ok "Helium browser already installed"
