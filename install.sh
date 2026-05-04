@@ -70,10 +70,20 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
     texlive-latex-base texlive-latex-extra texlive-fonts-recommended \
     wlogout
 
-# hyprland + hyprlock + hypridle + xdg-desktop-portal-hyprland from sid
+# hyprland + hyprlock + hypridle from sid
 info "Installing Hyprland from unstable..."
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -t unstable \
-    hyprland hyprlock hypridle xdg-desktop-portal-hyprland
+    hyprland hyprlock hypridle
+
+# Try to install xdg-desktop-portal-hyprland, but don't fail if dependencies conflict
+info "Attempting to install xdg-desktop-portal-hyprland..."
+if sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -t unstable xdg-desktop-portal-hyprland 2>/dev/null; then
+    ok "xdg-desktop-portal-hyprland installed"
+else
+    warn "xdg-desktop-portal-hyprland has dependency conflicts, installing fallback..."
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y xdg-desktop-portal-wlr xdg-desktop-portal-gtk
+    ok "Using xdg-desktop-portal-wlr as fallback"
+fi
 
 ok "Packages installed"
 
