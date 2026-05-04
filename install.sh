@@ -124,7 +124,8 @@ if ! command -v avizo-service &>/dev/null; then
     info "Building avizo from source..."
     # Install build dependencies from unstable to match upgraded libraries
     sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -t unstable \
-        meson ninja-build valac libgtk-layer-shell-dev libgtk-3-dev libdbus-1-dev
+        meson ninja-build valac libgtk-layer-shell-dev libgtk-3-dev libdbus-1-dev \
+        libgirepository1.0-dev gobject-introspection
     tmpdir=$(mktemp -d)
     git clone https://github.com/misterdanb/avizo.git "$tmpdir/avizo"
     cd "$tmpdir/avizo"
