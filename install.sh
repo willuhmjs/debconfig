@@ -139,23 +139,13 @@ else
     ok "avizo already installed"
 fi
 
-# --- install helium browser ---
-if ! command -v helium &>/dev/null; then
-    info "Installing Helium browser..."
-    tmpdir=$(mktemp -d)
-    curl -fsSL -o "$tmpdir/helium.deb" \
-        "https://browser.nickvision.org/linux/helium-browser_current_amd64.deb" || {
-        warn "Could not download Helium .deb — check https://browser.nickvision.org for the current URL"
-        warn "Skipping Helium install"
-        tmpdir=""
-    }
-    if [[ -n "$tmpdir" && -f "$tmpdir/helium.deb" ]]; then
-        sudo dpkg -i "$tmpdir/helium.deb" || sudo apt-get install -f -y
-        rm -rf "$tmpdir"
-        ok "Helium browser installed"
-    fi
+# --- install firefox ---
+if ! command -v firefox-esr &>/dev/null; then
+    info "Installing Firefox..."
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y firefox-esr
+    ok "Firefox installed"
 else
-    ok "Helium browser already installed"
+    ok "Firefox already installed"
 fi
 
 # --- config directories ---
@@ -244,7 +234,7 @@ bind = SUPER, RETURN, exec, kitty
 bind = SUPER, Q, killactive,
 bind = SUPER, SPACE, exec, wofi --show drun
 bind = SUPER, E, exec, thunar
-bind = SUPER, B, exec, helium
+bind = SUPER, B, exec, firefox-esr
 bind = SUPER, D, exec, discord
 bind = SUPER, F, fullscreen,
 bind = SUPER, V, togglefloating,
@@ -667,7 +657,9 @@ echo ""
 ok "Done. Reboot and greetd will start Hyprland."
 echo -e "   SUPER+RETURN  terminal"
 echo -e "   SUPER+SPACE   launcher"
-echo -e "   SUPER+B       helium browser"
+echo -e "   SUPER+E       file manager"
+echo -e "   SUPER+B       firefox"
+echo -e "   SUPER+D       discord"
 echo -e "   SUPER+Q       close window"
 echo -e "   SUPER+L       lock"
 echo ""
