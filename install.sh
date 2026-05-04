@@ -54,7 +54,7 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
     bluez \
     waybar wofi mako-notifier \
     cliphist \
-    policykit-1-gnome \
+    polkit-kde-agent-1 \
     xdg-desktop-portal-hyprland \
     grim slurp wl-clipboard \
     kitty dolphin \
@@ -66,11 +66,10 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
     fonts-jetbrains-mono fonts-font-awesome \
     rsync wlr-randr \
     libqt5quickcontrols2-5 libqt5svg5 \
-    greetd greetd-tuigreet \
-    zathura zathura-pdf-mupdf pandoc \
+    greetd tuigreet \
+    zathura zathura-pdf-poppler pandoc \
     texlive-latex-base texlive-latex-extra texlive-fonts-recommended \
-    wlogout \
-    discord
+    wlogout
 
 # hyprland + hyprlock + hypridle from sid
 info "Installing Hyprland from unstable..."
@@ -78,6 +77,25 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -t unstable \
     hyprland hyprlock hypridle
 
 ok "Packages installed"
+
+# --- install Discord ---
+if ! command -v discord &>/dev/null; then
+    info "Installing Discord..."
+    tmpdir=$(mktemp -d)
+    curl -fsSL -o "$tmpdir/discord.deb" \
+        "https://discord.com/api/download?platform=linux&format=deb" || {
+        warn "Could not download Discord .deb"
+        warn "Skipping Discord install"
+        tmpdir=""
+    }
+    if [[ -n "$tmpdir" && -f "$tmpdir/discord.deb" ]]; then
+        sudo dpkg -i "$tmpdir/discord.deb" || sudo apt-get install -f -y
+        rm -rf "$tmpdir"
+        ok "Discord installed"
+    fi
+else
+    ok "Discord already installed"
+fi
 
 # --- install JetBrains Mono Nerd Font (not in debian repos) ---
 if [[ ! -d /usr/share/fonts/JetBrainsMonoNerd ]]; then
