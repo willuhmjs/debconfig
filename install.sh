@@ -139,13 +139,20 @@ else
     ok "avizo already installed"
 fi
 
-# --- install firefox ---
-if ! command -v firefox-esr &>/dev/null; then
-    info "Installing Firefox..."
-    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y firefox-esr
-    ok "Firefox installed"
+# --- install helium browser ---
+if ! command -v helium &>/dev/null; then
+    info "Installing Helium browser..."
+    # Add Helium repository GPG key
+    curl -fsSL https://pkg.helium.computer/helium.gpg | sudo gpg --dearmor -o /usr/share/keyrings/helium.gpg
+    # Add Helium repository
+    echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/helium.gpg] https://pkg.helium.computer/deb stable main" | \
+        sudo tee /etc/apt/sources.list.d/helium.list > /dev/null
+    # Update and install
+    sudo apt-get update
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y helium
+    ok "Helium browser installed"
 else
-    ok "Firefox already installed"
+    ok "Helium browser already installed"
 fi
 
 # --- config directories ---
@@ -234,7 +241,7 @@ bind = SUPER, RETURN, exec, kitty
 bind = SUPER, Q, killactive,
 bind = SUPER, SPACE, exec, wofi --show drun
 bind = SUPER, E, exec, thunar
-bind = SUPER, B, exec, firefox-esr
+bind = SUPER, B, exec, helium
 bind = SUPER, D, exec, discord
 bind = SUPER, F, fullscreen,
 bind = SUPER, V, togglefloating,
@@ -658,7 +665,7 @@ ok "Done. Reboot and greetd will start Hyprland."
 echo -e "   SUPER+RETURN  terminal"
 echo -e "   SUPER+SPACE   launcher"
 echo -e "   SUPER+E       file manager"
-echo -e "   SUPER+B       firefox"
+echo -e "   SUPER+B       helium browser"
 echo -e "   SUPER+D       discord"
 echo -e "   SUPER+Q       close window"
 echo -e "   SUPER+L       lock"
